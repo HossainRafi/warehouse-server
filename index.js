@@ -25,28 +25,27 @@ async function run() {
       const result = await cursor.toArray();
       res.send(result);
     });
-      app.get("/mobile/:id", async (req, res) => {
-          const id = req.params.id
-          const query = { _id: ObjectId(id) }
-          const mobile = await mobileCollection.findOne(query)
-          res.send(mobile)
-      })
-      app.put("/mobile/:id", async (req, res) => {
-          const id = req.params.id
-          const quantity = req.body.newQuantity
-          const newItem=quantity-1
-          const filter = { _id: ObjectId(id) };
-          const options = { upsert: true };
-          const updateDoc = {
-            $set: { quantity:newItem },
-          };
-          const result = await mobileCollection.updateOne(
-            filter,
-            updateDoc,
-            options
-          );
-          res.send(result);
-      })
+    app.get("/mobile/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: ObjectId(id) };
+      const mobile = await mobileCollection.findOne(query);
+      res.send(mobile);
+    });
+    app.put("/mobile/:id", async (req, res) => {
+      const id = req.params.id;
+      const quantity = req.body.newQuantity;
+      const filter = { _id: ObjectId(id) };
+      const options = { upsert: true };
+      const updateDoc = {
+        $set: { quantity },
+      };
+      const result = await mobileCollection.updateOne(
+        filter,
+        updateDoc,
+        options
+      );
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
