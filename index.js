@@ -14,7 +14,6 @@ const client = new MongoClient(uri, {
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1,
 });
-console.log(uri);
 async function run() {
   try {
     await client.connect();
@@ -44,6 +43,17 @@ async function run() {
         updateDoc,
         options
       );
+      res.send(result);
+    });
+    app.delete("/mobile/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: ObjectId(id) };
+      const result = await mobileCollection.deleteOne(filter);
+      res.send(result);
+    });
+    app.post("/mobile", async (req, res) => {
+      const mobile = req.body.newProduct;
+      const result = await mobileCollection.insertOne(mobile);
       res.send(result);
     });
   } finally {
