@@ -42,6 +42,7 @@ async function run() {
         expiresIn: "1d",
       });
       res.send({ token });
+      console.log(token);
     });
 
     // All Products API
