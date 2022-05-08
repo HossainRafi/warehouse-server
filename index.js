@@ -56,6 +56,13 @@ async function run() {
       const result = await mobileCollection.insertOne(mobile);
       res.send(result);
     });
+    app.get("/items", async (req, res) => {
+      const email = req.query.email;
+      const query = { email };
+      const cursor = mobileCollection.find(query);
+      const result = await cursor.toArray();
+      res.send(result);
+    });
   } finally {
     // await client.close();
   }
